@@ -1,0 +1,11 @@
+{
+  "name": "ses-bounce",
+  "version": "0.1.0",
+  "description": "",
+  "author": "hyiromori",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "deploy": "npx serverless deploy"
+  }
+}
