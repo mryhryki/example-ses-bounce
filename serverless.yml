@@ -26,6 +26,9 @@ provider:
       Resource:
         - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.dynamoDbTableName}"
 
+plugins:
+  - "serverless-pseudo-parameters"
+
 functions:
   api:
     handler: handlers/api.handler
