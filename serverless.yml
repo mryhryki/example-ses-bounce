@@ -1,4 +1,4 @@
-service: ses-bounce
+service: example-ses-bounce
 frameworkVersion: '2'
 
 custom:
@@ -33,16 +33,6 @@ provider:
 plugins:
   - "serverless-pseudo-parameters"
 
-functions:
-  api:
-    handler: handlers/api.handler
-    events:
-      - http:
-          path: ''
-          method: post
-  receiveBounse:
-    handler: handlers/receive_bounce.handler
-
 resources:
   Resources:
     bounceTable:
@@ -58,3 +48,21 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+    sesTopic:
+      Type: "AWS::SNS::Topic"
+      Properties:
+        TopicName: "example-ses-bounce"
+        Subscription:
+          - Endpoint: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:example-ses-bounce-dev-receiveBounce"
+            Protocol: "lambda"
+
+functions:
+  api:
+    handler: handlers/api.handler
+    events:
+      - http:
+          path: ''
+          method: post
+  receiveBounce:
+    handler: handlers/receive_bounce.handler
+
