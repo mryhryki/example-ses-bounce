@@ -27,6 +27,7 @@ provider:
       Resource:
         - "arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/${self:custom.dynamoDbTableName}"
   environment:
+    DYBAMODB_TABLE_NAME: "${self:custom.dynamoDbTableName}"
     SES_SENDER_ADDRESS: "${self:custom.sesSenderAddress}"
 
 plugins:

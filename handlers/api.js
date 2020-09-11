@@ -1,5 +1,7 @@
 'use strict';
 const {SES} = require('aws-sdk')
+const {getData} = require('./common/dynamodb')
+
 const ses = new SES({
   apiVersion: '2010-12-01',
   region: 'us-east-1',
@@ -8,6 +10,14 @@ const ses = new SES({
 module.exports.handler = async (event) => {
   try {
     const {to, subject, body} = JSON.parse(event.body)
+    const data = await getData(to)
+
+    if (data && data.Item && data.Item.bounce) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify({message: 'Bounced address'}, null, 2)
+      };
+    }
 
     const params = {
       Destination: {
