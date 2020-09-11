@@ -9,6 +9,7 @@
     "deploy": "npx serverless deploy"
   },
   "dependencies": {
+    "aws-sdk": "^2.750.0",
     "serverless-pseudo-parameters": "^2.5.0"
   }
 }
