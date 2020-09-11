@@ -6,7 +6,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "deploy": "npx serverless deploy"
+    "deploy": "npx serverless deploy",
+    "remove": "npx serverless remove"
   },
   "dependencies": {
     "aws-sdk": "^2.750.0",
