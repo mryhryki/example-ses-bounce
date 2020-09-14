@@ -1,4 +1,5 @@
 'use strict';
+
 const {SES} = require('aws-sdk')
 const {getData} = require('./common/dynamodb')
 
@@ -10,8 +11,11 @@ const ses = new SES({
 module.exports.handler = async (event) => {
   try {
     const {to, subject, body} = JSON.parse(event.body)
+
+    // DynamoDBからアドレスに関する情報を取得
     const data = await getData(to)
 
+    // バウンスが検知されている場合は処理中断
     if (data && data.Item && data.Item.bounce) {
       return {
         statusCode: 200,
@@ -19,6 +23,7 @@ module.exports.handler = async (event) => {
       };
     }
 
+    // SES でのメール送信
     const params = {
       Destination: {
         ToAddresses: [to]
